@@ -25,11 +25,10 @@ const style = {
 
 export default function TableModal({ path, fileName }: any) {
   const [open, setOpen] = React.useState(false);
-  const [fileExcelData,setFileExcelData] = React.useState();
-  
+  const [fileExcelData,setFileExcelData] = React.useState([]);
   const handleOpen = async() => {
-    setOpen(true);
     await onSelectedFilename(path);
+    setOpen(true);
   };
 
   const handleClose = () => setOpen(false);
@@ -47,11 +46,11 @@ export default function TableModal({ path, fileName }: any) {
         body: JSON.stringify(body),
       });
       const data:any = await res.json();
+      console.log(data['data']);
       if(data){
         setFileExcelData(data['data']);
-        console.log(fileExcelData);
       }
-    }catch(e:any){
+    } catch(e:any){
       console.error(e);
     }
   }
@@ -72,21 +71,13 @@ export default function TableModal({ path, fileName }: any) {
           </div>
           <div className="my-3"></div>
           <div className="mx-auto">
+          {fileExcelData}
+
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 200 }} aria-label="simple table">
               <TableHead>
-                {/* {rowsHeader.map((rows:any) => {
-                    <TableRow className="bg-[#94a3b8]">
-                        <TableCell align="center">{rows}</TableCell>
-                    </TableRow>
-                })} */}
               </TableHead>
               <TableBody>
-                {/* {rows.map((row) => (
-                  <TableRow key={row.name} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-                    <TableCell align="center"></TableCell>
-                  </TableRow>
-                ))} */}
               </TableBody>
             </Table>
           </TableContainer>

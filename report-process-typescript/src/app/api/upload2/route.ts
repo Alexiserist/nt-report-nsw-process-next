@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
     console.log(`File name: ${file.name}`);
     console.log(`Content-Length: ${file.size}`);
 
-    const destinationDirPath = path.join(process.cwd(), "./assits/uploads");
+    const destinationDirPath = path.join(process.cwd(), "./assets/uploads");
     console.log(destinationDirPath);
 
     const fileArrayBuffer = await file.arrayBuffer();

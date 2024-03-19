@@ -68,7 +68,7 @@ export async function DELETE(req: Request, res: Response){
 }
 
 export async function GET(req: Request, res: Response){
-    const dir =  path.resolve('./assits/uploads' );
+    const dir =  path.resolve('./assets/uploads' );
     try{
         const filenames = await fs.readdir(dir) ? await fs.readdir(dir) : [];
         const filesDetail = filenames.length > 0 ? await Promise.all(filenames.map(async filename => {
@@ -76,7 +76,7 @@ export async function GET(req: Request, res: Response){
             const detail = await fs.stat(filePath);
                 return {
                     name: filename,
-                    path: './assits/uploads/' + filename,
+                    path: './assets/uploads/' + filename,
                     size: detail.size, 
                     modifiedAt: detail.mtime 
                 }
