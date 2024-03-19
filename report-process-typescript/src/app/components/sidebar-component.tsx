@@ -27,8 +27,22 @@ export default function SidebarComponent() {
             icon: MailIcon,
             name: 'Folder 1',
             isFolder: true,
-            subFolder: []
+            subFolder: [
+              {
+                icon: DraftsIcon,
+                name: 'File 1',
+                isFolder: false,
+                subFolder: []
+              },
+              {
+                icon: DraftsIcon,
+                name: 'File 1',
+                isFolder: false,
+                subFolder: []
+              },
+            ]
         },
+        
         {
             icon: DraftsIcon,
             name: 'File 1',
@@ -54,43 +68,44 @@ export default function SidebarComponent() {
       component="nav"
       aria-labelledby="nested-list-subheader"
     >
-            {itemList.map((item, index) => (
-                <ListItemButton>
+            {itemList.map((item, index) => {
+              if(item.subFolder.length === 0){
+                return (
+                  <ListItemButton>
                     <ListItemIcon>
-                        <item.icon/>
+                      <item.icon/>
                     </ListItemIcon>
                     <ListItemText primary={item.name}/>
-                </ListItemButton>
-            ))}
-      <ListItemButton>
-        <ListItemIcon>
-          <SendIcon />
-        </ListItemIcon>
-        <ListItemText primary="Sent mail" />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <DraftsIcon />
-        </ListItemIcon>
-        <ListItemText primary="Drafts" />
-      </ListItemButton>
-      <ListItemButton onClick={handleClick}>
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
-        <ListItemText primary="Inbox" />
-        {open ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <StarBorder />
-            </ListItemIcon>
-            <ListItemText primary="Starred" />
-          </ListItemButton>
-        </List>
-      </Collapse>
+                  </ListItemButton>
+                )
+              }else {
+                return (
+                  <>
+                  <ListItemButton onClick={handleClick}>
+                  <ListItemIcon>
+                      <item.icon/>
+                    </ListItemIcon>
+                    <ListItemText primary={item.name} />
+                    {open ? <ExpandLess /> : <ExpandMore />}
+                  </ListItemButton>
+                  {item.subFolder.map((subItem) => {
+                    return (
+                      <Collapse in={open} timeout="auto" unmountOnExit>
+                      <List component="div" disablePadding>
+                        <ListItemButton sx={{ pl: 4 }}>
+                          <ListItemIcon>
+                            <subItem.icon/>
+                          </ListItemIcon>
+                          <ListItemText primary={subItem.name}/>
+                        </ListItemButton>
+                      </List>
+                    </Collapse>
+                    )
+                  })}
+                  </>
+                )
+              }}
+            )}
     </List>
         </div>
     );
