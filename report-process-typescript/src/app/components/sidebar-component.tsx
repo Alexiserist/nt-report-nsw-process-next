@@ -6,107 +6,114 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import React from "react";
-import ListSubheader from '@mui/material/ListSubheader';
-import DraftsIcon from '@mui/icons-material/Drafts';
-import Collapse from '@mui/material/Collapse';
-import SendIcon from '@mui/icons-material/Send';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import StarBorder from '@mui/icons-material/StarBorder';
+import ListSubheader from "@mui/material/ListSubheader";
+import DraftsIcon from "@mui/icons-material/Drafts";
+import Collapse from "@mui/material/Collapse";
+import SendIcon from "@mui/icons-material/Send";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import StarBorder from "@mui/icons-material/StarBorder";
 
 export interface ListItem {
-    icon: any,
-    name: string,
-    isFolder : boolean,
-    subFolder : ListItem[]
+  icon: any;
+  name: string;
+  isFolder: boolean;
+  subFolder: ListItem[];
 }
 
 export default function SidebarComponent() {
-    const itemList: ListItem[] = [
+  const itemList: ListItem[] = [
+    {
+      icon: MailIcon,
+      name: "Folder 1",
+      isFolder: true,
+      subFolder: [
         {
-            icon: MailIcon,
-            name: 'Folder 1',
-            isFolder: true,
-            subFolder: [
-              {
-                icon: DraftsIcon,
-                name: 'File 1',
-                isFolder: false,
-                subFolder: []
-              },
-              {
-                icon: DraftsIcon,
-                name: 'File 1',
-                isFolder: false,
-                subFolder: []
-              },
-            ]
+          icon: DraftsIcon,
+          name: "File 1",
+          isFolder: false,
+          subFolder: [],
         },
-        
         {
-            icon: DraftsIcon,
-            name: 'File 1',
-            isFolder: false,
-            subFolder: []
+          icon: DraftsIcon,
+          name: "File 1",
+          isFolder: false,
+          subFolder: [],
         },
-        // Add more items as needed
-    ];
+      ],
+    },
+    {
+      icon: MailIcon,
+      name: "Folder 1",
+      isFolder: true,
+      subFolder: [
+        {
+          icon: DraftsIcon,
+          name: "File 1",
+          isFolder: false,
+          subFolder: [],
+        },
+        {
+          icon: DraftsIcon,
+          name: "File 1",
+          isFolder: false,
+          subFolder: [],
+        },
+      ],
+    },
+    {
+      icon: DraftsIcon,
+      name: "File 1",
+      isFolder: false,
+      subFolder: [],
+    },
+    // Add more items as needed
+  ];
 
-    const [open, setOpen] = React.useState(true);
-    const [openSecondLevel, setOpenSecondLevel] = React.useState(true);
-    const handleClick = () => {
-        setOpen(!open);
-    }
-    const handleClickSecondLevel = () => {
-        setOpenSecondLevel(!openSecondLevel);
-    }
+  const [openSecondLevel, setOpenSecondLevel] = React.useState(-1);
 
-    return (
-        <div>
-    <List
-      sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-      component="nav"
-      aria-labelledby="nested-list-subheader"
-    >
-            {itemList.map((item, index) => {
-              if(item.subFolder.length === 0){
-                return (
-                  <ListItemButton>
-                    <ListItemIcon>
-                      <item.icon/>
-                    </ListItemIcon>
-                    <ListItemText primary={item.name}/>
-                  </ListItemButton>
-                )
-              }else {
-                return (
-                  <>
-                  <ListItemButton onClick={handleClick}>
+  return (
+    <div>
+      <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }} component="nav" aria-labelledby="nested-list-subheader">
+        {itemList.map((item, index) => {
+          if (item.subFolder.length === 0) {
+            return (
+              <ListItemButton key={index}>
+                <ListItemIcon>
+                  <item.icon />
+                </ListItemIcon>
+                <ListItemText primary={item.name} />
+              </ListItemButton>
+            );
+          } else {
+            return (
+              <div key={index}>
+                <ListItemButton onClick={() => setOpenSecondLevel(openSecondLevel === index ? -1 : index)}>
                   <ListItemIcon>
-                      <item.icon/>
-                    </ListItemIcon>
-                    <ListItemText primary={item.name} />
-                    {open ? <ExpandLess /> : <ExpandMore />}
-                  </ListItemButton>
-                  {item.subFolder.map((subItem) => {
-                    return (
-                      <Collapse in={open} timeout="auto" unmountOnExit>
+                    <item.icon />
+                  </ListItemIcon>
+                  <ListItemText primary={item.name} />
+                  {openSecondLevel === index ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+                {item.subFolder.map((subItem,subIndex) => {
+                  return (
+                    <Collapse key={`collapse_${index}_${subIndex}`}  in={openSecondLevel === index} timeout="auto" unmountOnExit>
                       <List component="div" disablePadding>
                         <ListItemButton sx={{ pl: 4 }}>
                           <ListItemIcon>
-                            <subItem.icon/>
+                            <subItem.icon />
                           </ListItemIcon>
-                          <ListItemText primary={subItem.name}/>
+                          <ListItemText primary={subItem.name} />
                         </ListItemButton>
                       </List>
                     </Collapse>
-                    )
-                  })}
-                  </>
-                )
-              }}
-            )}
-    </List>
-        </div>
-    );
+                  );
+                })}
+              </div>
+            );
+          }
+        })}
+      </List>
+    </div>
+  );
 }
