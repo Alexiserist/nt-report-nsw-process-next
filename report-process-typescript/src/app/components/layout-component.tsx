@@ -10,12 +10,10 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import UploadFile from "@mui/icons-material/UploadFile"
-import Button from '@mui/material/Button';
 import SidebarComponent from "./sidebar-component";
 import UploadFileModal from "./modal/uploadfile-modal";
 
-const drawerWidth = 240;
+const drawerWidth = 500;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
   open?: boolean;
@@ -38,6 +36,12 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
+}
+
+export interface ListItem {
+  name: string;
+  isFolder: boolean;
+  subFolder: ListItem[];
 }
 
 const AppBar = styled(MuiAppBar, {
@@ -78,12 +82,35 @@ export default function LayoutComponent() {
     setOpen(false);
   };
 
+  const [dataSource, setDataSource] = React.useState(null);
+
+  React.useEffect(() => {
+    fetchingData();
+  }, []);
+
+  const fetchingData = async () => {
+    try {
+      const res = await fetch("/api/upload3", {
+        method: "GET",
+      });
+      const data = await res.json();
+      if (data["data"]) {
+        setDataSource(data["data"]);
+        console.log("dataReceived:", data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
-          <IconButton  onClick={handleDrawerClose} sx={{mr:2,...(!open && { display: "none" })}} >{theme.direction === "ltr" ? <ChevronLeftIcon sx={{color:"white"}} /> : <ChevronRightIcon />}</IconButton>
+          <IconButton onClick={handleDrawerClose} sx={{ mr: 2, ...(!open && { display: "none" }) }}>
+            {theme.direction === "ltr" ? <ChevronLeftIcon sx={{ color: "white" }} /> : <ChevronRightIcon />}
+          </IconButton>
           <IconButton color="inherit" aria-label="open drawer" onClick={handleDrawerOpen} edge="start" sx={{ mr: 2, ...(open && { display: "none" }) }}>
             <MenuIcon />
           </IconButton>
@@ -106,11 +133,11 @@ export default function LayoutComponent() {
         open={open}
       >
         <div>
-        <DrawerHeader>
-            <UploadFileModal/>
-        </DrawerHeader>
+          <DrawerHeader>
+            <UploadFileModal onUpload={fetchingData} menuItemList={dataSource || []} />
+          </DrawerHeader>
         </div>
-        <SidebarComponent></SidebarComponent>
+        <SidebarComponent menuItemList={dataSource || []}></SidebarComponent>
       </Drawer>
       <Main open={open}>
         <DrawerHeader />

@@ -24,9 +24,9 @@ export default function Home() {
   const tableModalRef = useRef(null);
   const [rowss, setRows] = useState<any[]>([]);
   const acceptFileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
-  useEffect(() => {
+/*   useEffect(() => {
     fetchingData();
-  },[])
+  },[]) */
 
 
   const fetchingData = async() => {
