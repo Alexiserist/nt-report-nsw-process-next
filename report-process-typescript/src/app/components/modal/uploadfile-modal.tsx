@@ -11,6 +11,7 @@ import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
 import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
+
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useForm } from "react-hook-form";
@@ -161,13 +162,13 @@ export default function UploadFileModal({ menuItemList, onUpload }: any) {
                 <Box sx={{ minWidth: 350 }}>
                   <FormControl fullWidth className="py-0 my-0">
                     <InputLabel className="bg-white">Folder Name</InputLabel>
-                    <Select value={selectedDropdown || '0'} {...register("folderName", { required: true })}>
+                    <Select value={selectedDropdown || "0"} {...register("folderName", { required: true })}>
                       {listDropdownFolder.map((menu, index) => (
                         <MenuItem key={`menu` + `${index}`} value={menu.name}>
                           {menu.name}
                         </MenuItem>
                       ))}
-                      <MenuItem value={'0'}>------No Folder------</MenuItem>
+                      <MenuItem value={"0"}>------No Folder------</MenuItem>
                     </Select>
                   </FormControl>
                 </Box>
@@ -182,7 +183,8 @@ export default function UploadFileModal({ menuItemList, onUpload }: any) {
                     >
                       <UploadFile className="mr-1"></UploadFile>Upload
                     </Button>
-                    <input type="file" id="fileInput" className="hidden" {...register("folderFiles", { required: true })}></input>
+                    <input type="file" 
+                    id="fileInput" className="hidden" {...register("folderFiles", { required: true })}></input>
                     {errors?.folderFiles ? (
                       <label htmlFor="fileInput" className="ml-3 text-red-500 text-xs">
                         Please Upload files*
@@ -225,7 +227,8 @@ export default function UploadFileModal({ menuItemList, onUpload }: any) {
                   >
                     <UploadFile className="mr-1"></UploadFile>Upload
                   </Button>
-                  <input type="file" id="fileInput" className="hidden" {...register("folderFiles", { required: true })}></input>
+                  <input type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" 
+                  id="fileInput" className="hidden" {...register("folderFiles", { required: true })}></input>
                   {errors?.folderFiles ? (
                     <label htmlFor="fileInput" className="ml-3 text-red-500 text-xs">
                       Please Upload files*
