@@ -16,7 +16,7 @@ export default function TableComponent({ jsonData }: any) {
     <div>
       <div className="text-2xl font-bold mb-5">{fileName ? `File name: ${fileName}` : ''}</div>
       {exceldata.length > 0 ? (
-        <div>
+        <div style={{width: 'auto', overflowX: 'scroll'}}>
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 850 ,overflow:'scroll'}} aria-label="simple table">
               <TableHead>
@@ -42,11 +42,9 @@ export default function TableComponent({ jsonData }: any) {
                 {exceldata.length > 0 ? (
                   exceldata.map((row: any, index: number) => (
                     <TableRow key={index} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-                      <TableCell align="center" className="cursor-pointer">
-                        {row.asd}
-                      </TableCell>
-                      <TableCell align="center">{row.s}</TableCell>
-                      <TableCell align="center"></TableCell>
+                      <TableCell style={{maxWidth: 170}} align="center" className="cursor-pointer"></TableCell>
+                      <TableCell  style={{maxWidth: 170}} align="center"></TableCell>
+                      <TableCell style={{maxWidth: 170}} align="center"></TableCell>
                     </TableRow>
                   ))
                 ) : (
