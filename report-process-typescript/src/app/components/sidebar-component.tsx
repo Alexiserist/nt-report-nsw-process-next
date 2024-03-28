@@ -78,7 +78,7 @@ export default function SidebarComponent({ menuItemList, fetchData, jsonData }: 
     }
   };
 
-  const handlePassingData = (path: any) => {
+  const handlePassingData = (path: any,isSubfolder?:boolean) => {
     if (path) {
       searchJsonDataFromExcelByPath(path)
     }
@@ -113,7 +113,7 @@ export default function SidebarComponent({ menuItemList, fetchData, jsonData }: 
                 <ListItemButton key={index}>
                   <ListItemIcon>{item.isFolder ? <FolderIcon /> : <DescriptionIcon />}</ListItemIcon>
                   <ListItemText primary={item.name} />
-                  <SearchIcon onClick={() => handlePassingData(item.path)} className="mr-3 p-1 text-blue-500 rounded-full bg-blue-200"/>
+                  <SearchIcon onClick={() => handlePassingData(item.path,true)} className="mr-3 p-1 text-blue-500 rounded-full bg-blue-200"/>
                   <DeleteForeverIcon onClick={() => handleClickDialogOpen(item.path)} className="mr-3 p-1 text-red-500 rounded-full bg-red-200" />
                 </ListItemButton>
               );

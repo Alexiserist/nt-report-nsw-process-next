@@ -183,7 +183,7 @@ export default function UploadFileModal({ menuItemList, onUpload }: any) {
                     >
                       <UploadFile className="mr-1"></UploadFile>Upload
                     </Button>
-                    <input type="file" 
+                    <input type="file" accept={selectedDropdown == "0" ? ".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" : ".txt"}
                     id="fileInput" className="hidden" {...register("folderFiles", { required: true })}></input>
                     {errors?.folderFiles ? (
                       <label htmlFor="fileInput" className="ml-3 text-red-500 text-xs">
@@ -227,7 +227,7 @@ export default function UploadFileModal({ menuItemList, onUpload }: any) {
                   >
                     <UploadFile className="mr-1"></UploadFile>Upload
                   </Button>
-                  <input type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" 
+                  <input type="file" accept=".txt"  
                   id="fileInput" className="hidden" {...register("folderFiles", { required: true })}></input>
                   {errors?.folderFiles ? (
                     <label htmlFor="fileInput" className="ml-3 text-red-500 text-xs">
