@@ -17,7 +17,7 @@ import Alert from "@mui/material/Alert";
 import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from "@mui/icons-material/Search";
 export interface ListItem {
   name: string;
   isFolder: boolean;
@@ -78,30 +78,53 @@ export default function SidebarComponent({ menuItemList, fetchData, jsonData }: 
     }
   };
 
-  const handlePassingData = (path: any,isSubfolder?:boolean) => {
+  const handlePassingData = (path: any) => {
     if (path) {
-      searchJsonDataFromExcelByPath(path)
+      searchJsonDataFromExcelByPath(path);
     }
   };
 
-  const searchJsonDataFromExcelByPath = async (path:string) => {
-    try{
-      const body = {
-        path: path
-      };
-      const resp = await axios.post('/api/upload3',body);
-      if(resp && resp['data']['data']){
-        jsonData({
-          fileName: resp['data']['fileNames'],
-          data:resp['data']['data']});
-      }
-    }catch(err:any){
-      console.log(err);
-    }finally{
-
+  const handlePassingData2 = (path: any) => {
+    if (path) {
+      searchJsonDataFromTxtBypath(path);
     }
-  }
+  };
 
+  const searchJsonDataFromExcelByPath = async (path: string) => {
+    try {
+      const body = {
+        path: path,
+      };
+      const resp = await axios.post("/api/upload3", body);
+      if (resp && resp["data"]["data"]) {
+        jsonData({
+          fileName: resp["data"]["fileNames"],
+          data: resp["data"]["data"],
+        });
+      }
+    } catch (err: any) {
+      console.log(err);
+    } finally {
+    }
+  };
+
+  const searchJsonDataFromTxtBypath = async (path: string) => {
+    try {
+      const body = {
+        path: path,
+      };
+      const resp = await axios.post("/api/search-file-txt", body);
+      if (resp && resp["data"]["data"]) {
+        jsonData({
+          fileName: resp["data"]["fileNames"],
+          data: resp["data"]["data"],
+        });
+      }
+    } catch (err: any) {
+      console.log(err);
+    } finally {
+    }
+  };
 
   return (
     <div>
@@ -113,7 +136,7 @@ export default function SidebarComponent({ menuItemList, fetchData, jsonData }: 
                 <ListItemButton key={index}>
                   <ListItemIcon>{item.isFolder ? <FolderIcon /> : <DescriptionIcon />}</ListItemIcon>
                   <ListItemText primary={item.name} />
-                  <SearchIcon onClick={() => handlePassingData(item.path,true)} className="mr-3 p-1 text-blue-500 rounded-full bg-blue-200"/>
+                  <SearchIcon onClick={() => handlePassingData(item.path)} className="mr-3 p-1 text-blue-500 rounded-full bg-blue-200" />
                   <DeleteForeverIcon onClick={() => handleClickDialogOpen(item.path)} className="mr-3 p-1 text-red-500 rounded-full bg-red-200" />
                 </ListItemButton>
               );
@@ -123,7 +146,7 @@ export default function SidebarComponent({ menuItemList, fetchData, jsonData }: 
                   <ListItemButton>
                     <ListItemIcon onClick={() => setOpenSecondLevel(openSecondLevel === index ? -1 : index)}>{item.isFolder ? <FolderIcon /> : <DescriptionIcon />}</ListItemIcon>
                     <ListItemText onClick={() => setOpenSecondLevel(openSecondLevel === index ? -1 : index)} primary={item.name} />
-                    <SearchIcon onClick={() => handlePassingData(item.path)} className="mr-3 p-1 text-blue-500 rounded-full bg-blue-200"/>
+                    <SearchIcon onClick={() => handlePassingData2(item.path)} className="mr-3 p-1 text-blue-500 rounded-full bg-blue-200" />
                     <DeleteForeverIcon onClick={() => handleClickDialogOpen(item.path)} className="mr-3 p-1 text-red-500 rounded-full bg-red-200" />
                     {openSecondLevel === index ? (
                       <ExpandLess onClick={() => setOpenSecondLevel(openSecondLevel === index ? -1 : index)} />
@@ -140,7 +163,7 @@ export default function SidebarComponent({ menuItemList, fetchData, jsonData }: 
                               <DescriptionIcon />
                             </ListItemIcon>
                             <ListItemText primary={subItem.name} />
-                            <SearchIcon onClick={() => handlePassingData(subItem.path)} className="mr-3 p-1 text-blue-500 rounded-full bg-blue-200"/>
+                            <SearchIcon onClick={() => handlePassingData2(subItem.path)} className="mr-3 p-1 text-blue-500 rounded-full bg-blue-200" />
                             <DeleteForeverIcon onClick={() => handleClickDialogOpen(subItem.path)} className="mr-3 p-1 text-red-500 rounded-full bg-blue-100" />
                           </ListItemButton>
                         </List>

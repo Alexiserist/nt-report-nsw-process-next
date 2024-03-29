@@ -105,59 +105,10 @@ export default function Home() {
   }
 
   return (
-    <main>
+    <main >
       <LayoutComponent>
         
       </LayoutComponent>
-      {/* <div className="max-w-lg rounded overflow-hidden shadow-lg m-4 p-4 bg-[#94a3b8] mx-auto">
-        <div className="mb-4 p-2 bg-indigo-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
-          <span className="flex rounded-full bg-indigo-500 uppercase px-2 py-1 text-xs font-bold mr-3">!</span>
-          <span className="font-semibold mr-2 text-left flex-auto">อัพโหลด</span>
-          <ArrowForwardIosIcon fontSize="small"></ArrowForwardIosIcon>
-        </div>
-        <form onSubmit={onSubmit} className="flex justify-between items-center">
-          <input type="file" name="file" accept={acceptFileType} onChange={(e) => setFile(e.target.files?.[0])}  ref={fileInputRef}/>
-          <input className="ring-2 px-3 py-2 bg-blue-800 text-white rounded-md cursor-pointer text-end" type="submit" value="Upload" />
-        </form>
-      </div>
-      <div className="max-w-lg">
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 200 }} aria-label="simple table">
-            <TableHead>
-              <TableRow className="bg-[#94a3b8]">
-                <TableCell align="center">File Name</TableCell>
-                <TableCell align="center">File sizes (byte)</TableCell>
-                <TableCell align="center">Action</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              { rowss.length > 0 ?
-              rowss.map((row) => (
-                <TableRow key={row.name} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-                  <TableCell align="center" className="cursor-pointer" >{row.name}</TableCell>
-                  <TableCell align="center">{row.size}</TableCell>
-                  <TableCell align="center">
-                  <div className="flex justify-center">
-                    <div>
-                      <Button className="px-0" onClick={() => onSelectedDelete(row.path)}>
-                        <ClearIcon fontSize="small" className="text-red-500 cursor-pointer"></ClearIcon>
-                      </Button>
-                    </div>
-                      <div >
-                      <TableModal  path={ row.path} fileName= {row.name} />
-                      </div>
-                  </div>
-                  </TableCell>
-                </TableRow>
-              )) :
-              <TableRow>
-                <TableCell colSpan={3} align="center" ><span className="font-bold">No data</span></TableCell>
-              </TableRow>
-              }
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div> */}
     </main>
   );
 }

@@ -145,7 +145,7 @@ export default function LayoutComponent() {
         </div>
         <SidebarComponent fetchData={fetchingData} menuItemList={dataSource || []} jsonData={setJsonDataExel} ></SidebarComponent>
       </Drawer>
-      <Main open={open}>
+      <Main open={open} className={open ?  "min-w-[calc(95vw_-_600px)] max-w-[calc(100vw_-_600px)]" : " max-w-[95vw]"} >
           <TableComponent jsonData={dataJson}/>
       </Main>
     </Box>
